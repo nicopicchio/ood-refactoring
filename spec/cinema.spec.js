@@ -9,62 +9,62 @@ describe("Cinema", () => {
     cinema = new Cinema()
   })
 
-  // it("creates new screens", () => {
-  //   cinema.addNewScreen("Screen 1", 20)
-  //   cinema.addNewScreen("Screen 2", 25)
+  it("add new screens", () => {
+    cinema.addNewScreen("Screen 1", 20)
+    cinema.addNewScreen("Screen 2", 25)
 
-  //   const expected = [
-  //     new Screen("Screen 1", 20),
-  //     new Screen("Screen 2", 25)
-  //   ]
-  //   expect(cinema.screens).toEqual(expected)
-  // })
-
-  // it("returns error trying to create duplicate screen", () => {
-  //   cinema.addNewScreen("Screen 1", 20)
-  //   const result = cinema.addNewScreen("Screen 1", 25)
-
-  //   const expected = "Screen already exists"
-
-  //   expect(result).toEqual(expected)
-  // })
-
-  // it("adds new films", () => {
-  //   cinema.addNewMovie("Nomad Land", 12, "1:48")
-  //   cinema.addNewMovie("The Power of the Dog", 15, "2:08")
-
-  //   const expected = [
-  //     new Movie("Nomad Land", 12, "1:48"),
-  //     new Movie("The Power of the Dog", 15, "2:08")
-  //   ]
-
-  //   expect(cinema.movies).toEqual(expected)
-  // })
-
-  // it("returns error trying to create duplicate film", () => {
-  //   cinema.addNewMovie("Nomad Land", 12, "1:48")
-  //   const result = cinema.addNewMovie("Nomad Land", "15", "2:08")
-
-  //   const expected = "Movie already exists"
-
-  //   expect(result).toEqual(expected)
-  // })
-
-  it("returns error trying to create film with invalid rating", () => {
-    const invalidRatings = ["20", "0", "UUU"]
-    const validRatings = ["U", "PG", "12", "15", "18"]
-
-    for (const invalidRating of invalidRatings) {
-      const result = cinema.addNewMovie("Invalid film", invalidRating, "2:08")
-      const expected = "Invalid rating"
-      expect(result).toEqual(expected)
-    }
-
-    for (const validRating of validRatings) {
-      const result = cinema.addNewMovie("Film " + validRating, validRating, "2:08")
-      expect(result).toBeUndefined()
-    }
+    const expected = [
+      new Screen("Screen 1", 20),
+      new Screen("Screen 2", 25)
+    ]
+    expect(cinema.screens).toEqual(expected)
   })
+
+  it("returns error trying to create duplicate screen", () => {
+    cinema.addNewScreen("Screen 1", 20)
+    const result = cinema.addNewScreen("Screen 1", 25)
+
+    const expected = "Screen already exists"
+
+    expect(result).toEqual(expected)
+  })
+
+  it("adds new films", () => {
+    cinema.addNewMovie("Nomad Land", 12, "1:48")
+    cinema.addNewMovie("The Power of the Dog", 15, "2:08")
+
+    const expected = [
+      new Movie("Nomad Land", 12, "1:48"),
+      new Movie("The Power of the Dog", 15, "2:08")
+    ]
+
+    expect(cinema.movies).toEqual(expected)
+  })
+
+  it("returns error trying to create duplicate film", () => {
+    cinema.addNewMovie("Nomad Land", 12, "1:48")
+    const result = cinema.addNewMovie("Nomad Land", "15", "2:08")
+
+    const expected = "Movie already exists"
+
+    expect(result).toEqual(expected)
+  })
+
+  // it("returns error trying to create film with invalid rating", () => {
+  //   const invalidRatings = ["20", "0", "UUU"]
+  //   const validRatings = ["U", "PG", "12", "15", "18"]
+
+  //   for (const invalidRating of invalidRatings) {
+  //     const result = cinema.addNewMovie("Invalid film", invalidRating, "2:08")
+  //     const expected = "Invalid rating"
+  //     expect(result).toEqual(expected)
+  //   }
+
+  //   for (const validRating of validRatings) {
+  //     const result = cinema.addNewMovie("Film " + validRating, validRating, "2:08")
+  //     expect(result).toBeUndefined()
+  //   }
+  // })
 
   // it("returns error trying to create film with invalid durations", () => {
   //   const invalidDurations = ["0:00", "abc", "4", "1:61", "1:1"]
