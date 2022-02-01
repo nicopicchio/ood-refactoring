@@ -1,75 +1,81 @@
+const Movie = require('./movie.js')
+const Screen = require('./screen.js')
+const screenExistsError = 'Screen already exists'
+const maxCapacityError = 'Exceeded max capacity'
+const movieExistsError = 'Movie already exists'
+const invalidRatingError = "Invalid rating"
+const ratingsArray = ["U", "PG", 12, 15, 18]
+
 class Cinema {
 
   constructor() {
     this.movies = []
     this.screens = []
+    this.maxCapacity = 100
   }
-
-  //Add a new screen
+  
   addNewScreen(screenName, capacity) {
-    if (capacity > 100) {
-      return 'Exceeded max capacity'
-    }
-
-    //Check the screen doesn't already exist
-    let screen = null
-    // I would use a for of loop
-    for (let i=0;i<this.screens.length;i++) {
-      if (this.screens[i].name===screenName) {
-        screen = this.screens[i]
+    for (const screen of this.screens) {
+      if (screen.screenName === screenName) {
+        return screenExistsError
+      } else if (capacity > this.capacity) {
+        return maxCapacityError
       }
     }
-    // I would use a strict inequality (!==) and not sure about the logic
-    if(screen!==null) {
-      return 'Screen already exists'
-    }
-
-    this.screens.push({
-      name: screenName,
-      capacity: capacity,
-      showings : []
-    })
+    return this.screens.push(new Screen(screenName, capacity))
   }
+
+  addNewMovie(movieTitle, ageRating, duration) {
+    for (const movie of this.movies) {
+      if (movie.title === movieTitle || movie.title !== null) {
+        return movieExistsError
+      } else if (movie.ageRating !== ) {
+        return invalidRatingError
+      }
+    }
+    return this.movies.push(new Movie(movieTitle, ageRating, duration))
+  }
+
 
   //Add a new film
-  addNewMovie(movieName, rating, duration) {
+  // addNewMovie(movieName, rating, duration) {
 
-    //Check the film doesn't already exist
-    let movie = null
-    // use for of loop
-    for (let i=0;i<this.movies.length;i++) {
-      if (this.movies[i].name===movieName) {
-        movie = this.movies[i]
-      }
-    }
+  //   //Check the film doesn't already exist
+  //   let movie = null
+  //   // use for of loop
+  //   for (let i=0;i<this.movies.length;i++) {
+  //     if (this.movies[i].name===movieName) {
+  //       movie = this.movies[i]
+  //     }
+  //   }
 
-    // Not sure about the logic
-    if(movie!==null) {
-      return 'Film already exists'
-    }
+  //   // Not sure about the logic
+  //   if(movie!==null) {
+  //     return 'Film already exists'
+  //   }
 
-    //Check the rating is valid
-    if (rating!=="U" && rating!=="PG") {
-      if (rating!=="12" && rating!=="15" && rating!=="18") {
-        return 'Invalid rating'
-      }
-    }
+  //   //Check the rating is valid
+  //   if (rating!=="U" && rating!=="PG") {
+  //     if (rating!=="12" && rating!=="15" && rating!=="18") {
+  //       return 'Invalid rating'
+  //     }
+  //   }
     
-    //Check duration
-    // not sure about this, what does it do?
-    const result = /^(\d?\d):(\d\d)$/.exec(duration)
-    if(result===null) {
-      return 'Invalid duration'
-    }
+  //   //Check duration
+  //   // not sure about this, what does it do?
+  //   const result = /^(\d?\d):(\d\d)$/.exec(duration)
+  //   if(result===null) {
+  //     return 'Invalid duration'
+  //   }
 
-    const hours = parseInt(result[1])
-    const mins = parseInt(result[2])
-    if(hours<=0 || mins>60) {
-      return 'Invalid duration'
-    }
+  //   const hours = parseInt(result[1])
+  //   const mins = parseInt(result[2])
+  //   if(hours<=0 || mins>60) {
+  //     return 'Invalid duration'
+  //   }
 
-    this.movies.push({name:movieName, rating:rating, duration: duration})
-  }
+  //   this.movies.push({name:movieName, rating:rating, duration: duration})
+  // }
 
   //Add a showing for a specific film to a screen at the provided start time
   addNewShowing(movie, screenName, startTime) {
