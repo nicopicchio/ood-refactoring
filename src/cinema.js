@@ -1,25 +1,26 @@
 class Cinema {
 
   constructor() {
-    this.films = []
+    this.movies = []
     this.screens = []
   }
 
   //Add a new screen
-  save(screenName, capacity) {
+  addNewScreen(screenName, capacity) {
     if (capacity > 100) {
       return 'Exceeded max capacity'
     }
 
     //Check the screen doesn't already exist
     let screen = null
+    // I would use a for of loop
     for (let i=0;i<this.screens.length;i++) {
       if (this.screens[i].name===screenName) {
         screen = this.screens[i]
       }
     }
-
-    if(screen!=null) {
+    // I would use a strict inequality (!==) and not sure about the logic
+    if(screen!==null) {
       return 'Screen already exists'
     }
 
@@ -31,30 +32,33 @@ class Cinema {
   }
 
   //Add a new film
-  addNew(movieName, r, duration) {
+  addNewMovie(movieName, rating, duration) {
 
     //Check the film doesn't already exist
     let movie = null
-    for (let i=0;i<this.films.length;i++) {
-      if (this.films[i].name==movieName) {
-        movie = this.films[i]
+    // use for of loop
+    for (let i=0;i<this.movies.length;i++) {
+      if (this.movies[i].name===movieName) {
+        movie = this.movies[i]
       }
     }
 
-    if(movie!=null) {
+    // Not sure about the logic
+    if(movie!==null) {
       return 'Film already exists'
     }
 
     //Check the rating is valid
-    if (r!="U" && r!="PG") {
-      if (r!="12" && r!="15" && r!="18") {
+    if (rating!=="U" && rating!=="PG") {
+      if (rating!=="12" && rating!=="15" && rating!=="18") {
         return 'Invalid rating'
       }
     }
     
     //Check duration
+    // not sure about this, what does it do?
     const result = /^(\d?\d):(\d\d)$/.exec(duration)
-    if(result==null) {
+    if(result===null) {
       return 'Invalid duration'
     }
 
@@ -64,14 +68,14 @@ class Cinema {
       return 'Invalid duration'
     }
 
-    this.films.push({name:movieName, rating:r, duration: duration})
+    this.movies.push({name:movieName, rating:rating, duration: duration})
   }
 
   //Add a showing for a specific film to a screen at the provided start time
-  add(movie, screenName, startTime) {
+  addNewShowing(movie, screenName, startTime) {
 
     let result = /^(\d?\d):(\d\d)$/.exec(startTime)
-    if(result==null) {
+    if(result===null) {
       return 'Invalid start time'
     }
 
@@ -84,9 +88,9 @@ class Cinema {
 
     let film = null
     //Find the film by name
-    for (let i=0;i<this.films.length;i++) {
-      if (this.films[i].name==movie) {
-        film = this.films[i]
+    for (let i=0;i<this.movies.length;i++) {
+      if (this.movies[i].name===movie) {
+        film = this.movies[i]
       }
     }
 
@@ -98,19 +102,19 @@ class Cinema {
     //if end time is over midnight, it's an error
     //Check duration
     result = /^(\d?\d):(\d\d)$/.exec(film.duration)
-    if(result==null) {
+    if(result===null) {
       return 'Invalid duration'
     }
 
     const durationHours = parseInt(result[1])
     const durationMins = parseInt(result[2])
-    
+    const screenCleaningTime = 20
     //Add the running time to the duration
     let intendedEndTimeHours = intendedStartTimeHours + durationHours
     
     //It takes 20 minutes to clean the screen so add on 20 minutes to the duration 
     //when working out the end time
-    let intendedEndTimeMinutes = intendedStartTimeMinutes + durationMins + 20
+    let intendedEndTimeMinutes = intendedStartTimeMinutes + durationMins + screenCleaningTime
     if (intendedEndTimeMinutes>=60) {
       intendedEndTimeHours += Math.floor(intendedEndTimeMinutes/60)
       intendedEndTimeMinutes = intendedEndTimeMinutes%60
@@ -123,7 +127,7 @@ class Cinema {
     //Find the screen by name
     let theatre = null
     for (let i=0;i<this.screens.length;i++) {
-      if (this.screens[i].name==screenName) {
+      if (this.screens[i].name===screenName) {
         theatre = this.screens[i]
       }
     }
@@ -140,7 +144,7 @@ class Cinema {
       //Get the start time in hours and minutes
       const startTime = theatre.showings[i].startTime
       result = /^(\d?\d):(\d\d)$/.exec(startTime)
-      if(result==null) {
+      if(result===null) {
         return 'Invalid start time'
       }
   
@@ -153,7 +157,7 @@ class Cinema {
       //Get the end time in hours and minutes
       const endTime = theatre.showings[i].endTime
       result = /^(\d?\d):(\d\d)$/.exec(endTime)
-      if(result==null) {
+      if(result===null) {
         return 'Invalid end time'
       }
   
@@ -164,31 +168,31 @@ class Cinema {
       }
 
       //if intended start time is between start and end
-      const d1 = new Date()
-      d1.setMilliseconds(0)
-      d1.setSeconds(0)
-      d1.setMinutes(intendedStartTimeMinutes)
-      d1.setHours(intendedStartTimeHours)
+      const date1 = new Date()
+      date1.setMilliseconds(0)
+      date1.setSeconds(0)
+      date1.setMinutes(intendedStartTimeMinutes)
+      date1.setHours(intendedStartTimeHours)
 
-      const d2 = new Date()
-      d2.setMilliseconds(0)
-      d2.setSeconds(0)
-      d2.setMinutes(intendedEndTimeMinutes)
-      d2.setHours(intendedEndTimeHours)
+      const date2 = new Date()
+      date2.setMilliseconds(0)
+      date2.setSeconds(0)
+      date2.setMinutes(intendedEndTimeMinutes)
+      date2.setHours(intendedEndTimeHours)
 
-      const d3 = new Date()
-      d3.setMilliseconds(0)
-      d3.setSeconds(0)
-      d3.setMinutes(startTimeMins)
-      d3.setHours(startTimeHours)
+      const date3 = new Date()
+      date3.setMilliseconds(0)
+      date3.setSeconds(0)
+      date3.setMinutes(startTimeMins)
+      date3.setHours(startTimeHours)
 
-      const d4 = new Date()
-      d4.setMilliseconds(0)
-      d4.setSeconds(0)
-      d4.setMinutes(endTimeMins)
-      d4.setHours(endTimeHours)
+      const date4 = new Date()
+      date4.setMilliseconds(0)
+      date4.setSeconds(0)
+      date4.setMinutes(endTimeMins)
+      date4.setHours(endTimeHours)
 
-      if ((d1 > d3 && d1 < d4) || (d2 > d3 && d2 < d4) || (d1 < d3 && d2 > d4) ) {
+      if ((date1 > date3 && date1 < date4) || (date2 > date3 && date2 < date4) || (date1 < date3 && date2 > date4) ) {
         error = true
         break
       }
@@ -206,7 +210,7 @@ class Cinema {
     })
   } 
 
-  allShowings() {
+  getAllShowings() {
     let showings = {}
     for (let i=0;i<this.screens.length;i++) {
       const screen = this.screens[i]
