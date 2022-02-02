@@ -4,6 +4,7 @@ const screenExistsError = 'Screen already exists'
 const maxCapacityError = 'Exceeded max capacity'
 const movieExistsError = 'Movie already exists'
 const invalidRatingError = "Invalid rating"
+const invalidDurationError = "Invalid duration"
 
 class Cinema {
 
@@ -42,34 +43,10 @@ class Cinema {
     return this.movies.push(new Movie(movieTitle, ageRating, duration))
   }
 
-
-
   //Add a new film
   // addNewMovie(movieName, rating, duration) {
-
-  //   //Check the film doesn't already exist
-  //   let movie = null
-  //   // use for of loop
-  //   for (let i=0;i<this.movies.length;i++) {
-  //     if (this.movies[i].name===movieName) {
-  //       movie = this.movies[i]
-  //     }
-  //   }
-
-  //   // Not sure about the logic
-  //   if(movie!==null) {
-  //     return 'Film already exists'
-  //   }
-
-  //   //Check the rating is valid
-  //   if (rating!=="U" && rating!=="PG") {
-  //     if (rating!=="12" && rating!=="15" && rating!=="18") {
-  //       return 'Invalid rating'
-  //     }
-  //   }
     
   //   //Check duration
-  //   // not sure about this, what does it do?
   //   const result = /^(\d?\d):(\d\d)$/.exec(duration)
   //   if(result===null) {
   //     return 'Invalid duration'
@@ -97,7 +74,6 @@ class Cinema {
     if(intendedStartTimeHours<=0 || intendedStartTimeMinutes>60) {
       return 'Invalid start time'
     }
-
 
     let film = null
     //Find the film by name
