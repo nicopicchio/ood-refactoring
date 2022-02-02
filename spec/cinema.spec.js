@@ -12,7 +12,6 @@ describe("Cinema", () => {
   it("add new screens", () => {
     cinema.addNewScreen("Screen 1", 20)
     cinema.addNewScreen("Screen 2", 25)
-
     const expected = [
       new Screen("Screen 1", 20),
       new Screen("Screen 2", 25)
@@ -23,32 +22,35 @@ describe("Cinema", () => {
   it("returns error trying to create duplicate screen", () => {
     cinema.addNewScreen("Screen 1", 20)
     const result = cinema.addNewScreen("Screen 1", 25)
-
     const expected = "Screen already exists"
-
     expect(result).toEqual(expected)
   })
 
-  it("adds new films", () => {
-    cinema.addNewMovie("Nomad Land", 12, "1:48")
-    cinema.addNewMovie("The Power of the Dog", 15, "2:08")
-
+  it("adds new movies", () => {
+    cinema.addNewMovie("Nomad Land", "12", "1:48")
+    cinema.addNewMovie("The Power of the Dog", "15", "2:08")
     const expected = [
-      new Movie("Nomad Land", 12, "1:48"),
-      new Movie("The Power of the Dog", 15, "2:08")
+      new Movie("Nomad Land", "12", "1:48"),
+      new Movie("The Power of the Dog", "15", "2:08")
     ]
-
     expect(cinema.movies).toEqual(expected)
   })
 
-  it("returns error trying to create duplicate film", () => {
-    cinema.addNewMovie("Nomad Land", 12, "1:48")
+  it("returns error trying to create duplicate movie", () => {
+    cinema.addNewMovie("Nomad Land", "12", "1:48")
     const result = cinema.addNewMovie("Nomad Land", "15", "2:08")
-
     const expected = "Movie already exists"
-
     expect(result).toEqual(expected)
   })
+
+  it("returns error trying to create movie with invalid rating", () => {
+    cinema.addNewMovie("Nomad Land", "12", "1:48")
+    cinema.addNewMovie("The Power of the Dog", "15", "2:08")
+    const result = cinema.addNewMovie("Batman Begins", "4", "2:14")
+    const expected = "Invalid rating"
+    expect(result).toEqual(expected)
+  })
+
 
   // it("returns error trying to create film with invalid rating", () => {
   //   const invalidRatings = ["20", "0", "UUU"]

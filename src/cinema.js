@@ -4,7 +4,6 @@ const screenExistsError = 'Screen already exists'
 const maxCapacityError = 'Exceeded max capacity'
 const movieExistsError = 'Movie already exists'
 const invalidRatingError = "Invalid rating"
-const ratingsArray = ['U', 'PG', '12', '15', '18']
 
 class Cinema {
 
@@ -12,6 +11,7 @@ class Cinema {
     this.movies = []
     this.screens = []
     this.maxCapacity = 100
+    this.ratings = ['U', 'PG', '12', '15', '18']
   }
 
   doesScreenExist(screenName) {
@@ -26,6 +26,10 @@ class Cinema {
     return this.maxCapacity < capacity
   }
   
+  checkRating(ageRating) {
+    return this.ratings.includes(ageRating)
+  }
+
   addNewScreen(screenName, capacity) {
     if (this.doesScreenExist(screenName)) return screenExistsError
     if (this.checkScreenCapacity(capacity)) return maxCapacityError
@@ -34,8 +38,10 @@ class Cinema {
 
   addNewMovie(movieTitle, ageRating, duration) {
     if (this.doesMovieExist(movieTitle)) return movieExistsError
+    if (!this.checkRating(ageRating)) return invalidRatingError
     return this.movies.push(new Movie(movieTitle, ageRating, duration))
   }
+
 
 
   //Add a new film
